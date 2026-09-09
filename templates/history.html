@@ -1,21 +1,45 @@
-{% extends "index.html" %} {% block content %}
-YOUR RECORDS · NEURO-ONCOLOGY
-Scan History
-{% if predictions %}
-{% for p in predictions %}
-<div class="result">
-  <div class="cardbody">
-    <p class="result-label">{{ p.result }}</p>
+{% extends "index.html" %}
+{% block content %}
+<div class="container" style="padding-top:0;">
+  <div class="masthead">
+    <span class="eyebrow" style="color:#6ee7c0; font-family:monospace; font-size:11px; letter-spacing:0.14em; margin:0 0 16px; display:block;">YOUR RECORDS · NEURO-ONCOLOGY</span>
+    <h1 style="display:none;">Scan History</h1>
   </div>
+
+  {% if predictions %}
+    {% for p in predictions %}
+    <div class="result" style="margin-bottom:16px;">
+      <div class="cardshadow" style="position:relative; border-radius:6px; padding:1px; background:linear-gradient(135deg,#3f8f76,transparent 60%);">
+        <div class="cardbody" style="background:#12161d; border:1px solid #232b36; border-radius:5px; padding:20px 24px; text-align:left; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
+          <div>
+            <p class="result-eyebrow" style="font-family:monospace; font-size:11px; letter-spacing:0.14em; color:#8b96a3; margin:0;">{{ p.file }}</p>
+            <p class="result-label" style="font-family:sans-serif; font-size:17px; font-weight:600; color:#6ee7c0; margin:8px 0 6px;">{{ p.result }}</p>
+            <p class="result-confidence" style="font-family:monospace; font-size:13px; letter-spacing:0.05em; color:#8b96a3; margin:0;">
+              CONFIDENCE: <span style="color:#e7ecef; font-weight:500;">{{ (p.confidence * 100) | round(2) }}%</span>
+            </p>
+          </div>
+          <div class="dz-meta" style="font-family:monospace; font-size:11px; color:#8b96a3;">
+            {{ p.uploaded_at.strftime('%d %b %Y, %I:%M %p') }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="result" style="margin-bottom:16px;">
+      <div class="cardshadow" style="position:relative; border-radius:6px; padding:1px; background:linear-gradient(135deg,#3f8f76,transparent 60%);">
+        <div class="cardbody" style="background:#12161d; border:1px solid #232b36; border-radius:5px; padding:20px 24px;">
+          <p class="result-label" style="font-family:sans-serif; font-size:17px; font-weight:600; color:#6ee7c0; margin:0 0 6px;">No scans yet</p>
+          <p class="result-confidence" style="font-family:monospace; font-size:13px; color:#8b96a3; margin:0;">Your uploaded MRIs will show up here once you run a detection.</p>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div style="margin-top:28px; text-align:center;">
+    <a href="{{ url_for('index') }}" class="scan-btn" style="display:inline-block; text-decoration:none; background:#6ee7c0; color:#0a0d12; font-weight:600; font-size:14px; padding:10px 20px; border-radius:4px;">Upload a New Scan</a>
+  </div>
+
+  <p class="disclaimer" style="margin-top:24px; font-size:11px; color:#8b96a3; text-align:center; letter-spacing:0.05em;">FOR RESEARCH / SCREENING SUPPORT ONLY — NOT A SUBSTITUTE FOR CLINICAL DIAGNOSIS</p>
 </div>
-{% endfor %}
-{% else %}
-No scans yet
-
-Your uploaded MRIs will show up here once you run a detection.
-
-{% endif %}
-Upload a New Scan
-FOR RESEARCH / SCREENING SUPPORT ONLY — NOT A SUBSTITUTE FOR CLINICAL DIAGNOSIS
-
 {% endblock %}
