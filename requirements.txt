@@ -6,3 +6,4 @@ python-dotenv
 tensorflow
 numpy
 email-validator
+Pillow
