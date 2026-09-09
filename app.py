@@ -52,6 +52,9 @@ class Prediction(db.Model):
 
     user = db.relationship("User", backref="predictions", lazy=True)
 
+with app.app_context():
+        db.create_all()
+
 
 
 clas_labbels = ['glioma', 'meningioma', 'notumor', 'pituitary']
@@ -147,6 +150,4 @@ def uploaded_file(filename):
 
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(debug=True)
