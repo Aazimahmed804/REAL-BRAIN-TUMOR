@@ -10,7 +10,20 @@ from werkzeug.security import generate_password_hash
 from datetime import datetime
 from aa import Registration
 
-load_dotenv()
+
+
+import os
+import urllib.request
+
+MODEL_PATH = "models/model.h5"
+MODEL_URL = "https://huggingface.co/aazim12/model.h5/resolve/main/model.h5"
+
+if not os.path.exists(MODEL_PATH):
+    os.makedirs("models", exist_ok=True)
+    print("Downloading model from Hugging Face...")
+    urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+    print("Model downloaded successfully.")
+model = load_model("models/model.h5")
 
 
 app = Flask(__name__)
@@ -44,7 +57,7 @@ class Prediction(db.Model):
     user = db.relationship("User", backref="predictions", lazy=True)
 
 
-model = load_model("models/model.h5")
+
 clas_labbels = ['glioma', 'meningioma', 'notumor', 'pituitary']
 
 
