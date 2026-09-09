@@ -9,10 +9,6 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 from aa import Registration
-
-
-
-import os
 import urllib.request
 
 MODEL_PATH = "models/model.h5"
