@@ -1,0 +1,107 @@
+
+{% extends "index.html" %}
+{% block content %}
+<div class="scanfield" aria-hidden="true"></div>
+
+<div class="container">
+
+  <header class="masthead">
+    <span class="eyebrow">DIAGNOSTIC IMAGING · NEURO-ONCOLOGY</span>
+    <h1>MRI Tumor Detection System</h1>
+    <p class="lede">Upload an MRI scan and the model will flag regions of the image consistent with tumor tissue.</p>
+  </header>
+
+  <main class="viewport-card">
+    <span class="corner tl" aria-hidden="true"></span>
+    <span class="corner tr" aria-hidden="true"></span>
+    <span class="corner bl" aria-hidden="true"></span>
+    <span class="corner br" aria-hidden="true"></span>
+
+    <form id="scanForm" method="POST" enctype="multipart/form-data">
+      <label class="dropzone" for="file" id="dropzone">
+        <svg class="dz-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a4 4 0 0 0-4 4v1a3 3 0 0 0-2 2.8V13a3 3 0 0 0 1.5 2.6 3 3 0 0 0 1.2 3.2 3 3 0 0 0 3 1.6 4 4 0 0 0 3.6-2.2"></path>
+          <path d="M12 3a4 4 0 0 1 4 4v1a3 3 0 0 1 2 2.8V13a3 3 0 0 1-1.5 2.6 3 3 0 0 1-1.2 3.2 3 3 0 0 1-3 1.6"></path>
+          <path d="M9 8h.01M15 8h.01M8 12h.01M16 12h.01M10 16h.01M14 16h.01"></path>
+        </svg>
+        <input type="file" id="file" name="file" accept="image/*" required hidden>
+        <span class="dz-title">Drop MRI image, or click to browse</span>
+        <span class="dz-meta">JPG / PNG — MAX 20MB</span>
+        <span class="dz-filename" id="fileName"></span>
+      </label>
+
+      <button type="submit" class="scan-btn">Run Detection</button>
+    </form>
+
+    <div class="status-bar">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">AWAITING IMAGE</span>
+    </div>
+  </main>
+
+  <footer class="disclaimer">
+    FOR RESEARCH / SCREENING SUPPORT ONLY — NOT A SUBSTITUTE FOR CLINICAL DIAGNOSIS
+  </footer>
+
+ {% if result %}
+<div class="result">
+  <div class="cardshadow">
+  <div class="cardbody">
+    <span class="result-eyebrow">DETECTION OUTPUT</span>
+
+    <div class="scan-preview">
+      <img src="{{ file_path }}" alt="Uploaded MRI scan">
+      <span class="scan-tag">SCAN</span>
+    </div>
+
+    <h4 class="result-label">{{ result }}</h4>
+    <p class="result-confidence">CONFIDENCE: <span>{{ confidence }}%</span></p>
+
+
+    <a href="{{ url_for('history') }}" class="auth-link">View My Scan History</a>
+  </div>
+</div>
+{% endif %}
+
+
+</div>
+
+<script>
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('file');
+  const fileNameEl = document.getElementById('fileName');
+  const statusDot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
+
+  function showFile(file){
+    if(!file) return;
+    fileNameEl.textContent = file.name;
+    statusDot.classList.add('ready');
+    statusText.textContent = 'IMAGE READY — ' + (file.size / 1024).toFixed(0) + ' KB';
+  }
+
+  fileInput.addEventListener('change', () => showFile(fileInput.files[0]));
+
+  ['dragenter','dragover'].forEach(evt =>
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.classList.add('drag-over');
+    })
+  );
+
+  ['dragleave','drop'].forEach(evt =>
+    dropzone.addEventListener(evt, e => {
+      e.preventDefault();
+      dropzone.classList.remove('drag-over');
+    })
+  );
+
+  dropzone.addEventListener('drop', e => {
+    const file = e.dataTransfer.files[0];
+    if(file){
+      fileInput.files = e.dataTransfer.files;
+      showFile(file);
+    }
+  });
+</script>
+    {% endblock %}

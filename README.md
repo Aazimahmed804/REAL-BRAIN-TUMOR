@@ -1,0 +1,3 @@
+# BRAIN TUMOR DETECTION APP
+Full-stack MRI brain tumor detection system — VGG16 transfer learning, Flask backend, SQLAlchemy auth, and per-user scan history.
+A full-stack web application that classifies brain MRI scans into four categories (glioma, meningioma, pituitary tumor, or no tumor) using a VGG16-based transfer learning model. Built with Flask, SQLAlchemy for user authentication and prediction history, and a custom dark-themed UI. Includes a comparison against a custom CNN architecture to justify the transfer learning approach.

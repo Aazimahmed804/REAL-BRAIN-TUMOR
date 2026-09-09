@@ -1,0 +1,11 @@
+flask
+flask-sqlalchemy
+flask-wtf
+werkzeug
+python-dotenv
+tensorflow
+numpy
+<<<<<<< HEAD
+=======
+
+>>>>>>> 80951e212e669f994897189b877b4a938774834f

@@ -1,0 +1,7 @@
+.env
+venv/
+uploads/
+brain_tumor.db
+__pycache__/
+*.pyc
+models/model.h5

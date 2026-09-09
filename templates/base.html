@@ -1,0 +1,198 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="auth-page">
+  <div class="auth-box">
+
+    <div class="auth-brand">
+      <span class="eyebrow">SECURE ACCESS</span>
+      <h1>MRI Tumor Detection</h1>
+      <p class="lede">Create an account to upload scans and track your results.</p>
+    </div>
+
+    <form method="POST" action="/" class="auth-form" novalidate>
+      {{ form.hidden_tag() }}
+
+      <div class="field-group">
+        {{ form.name.label(class_="field-label") }}
+        {{ form.name() }}
+        {% if form.name.errors %}
+          <span class="field-error">{{ form.name.errors[0] }}</span>
+        {% endif %}
+      </div>
+
+      <div class="field-group">
+        {{ form.email.label(class_="field-label") }}
+        {{ form.email() }}
+        {% if form.email.errors %}
+          <span class="field-error">{{ form.email.errors[0] }}</span>
+        {% endif %}
+      </div>
+
+      <div class="field-group">
+        {{ form.password.label(class_="field-label") }}
+        {{ form.password() }}
+        {% if form.password.errors %}
+          <span class="field-error">{{ form.password.errors[0] }}</span>
+        {% endif %}
+      </div>
+
+      {{ form.submit() }}
+    </form>
+
+    <div class="auth-footer">
+      Already have an account? <a href="#" class="auth-link">Log in</a>
+    </div>
+
+  </div>
+
+  <p class="disclaimer">FOR RESEARCH / SCREENING SUPPORT ONLY — NOT A SUBSTITUTE FOR CLINICAL DIAGNOSIS</p>
+</div>
+
+<style>
+  /* tone down the background grid so it doesn't fight with the form */
+  .scanfield{
+    opacity:0.12 !important;
+  }
+  .scanfield::after{
+    display:none !important;
+  }
+
+  .auth-page{
+    position:relative;
+    z-index:1;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .auth-box{
+    width:100%;
+    max-width:380px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:36px 32px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .auth-brand{
+    text-align:center;
+    margin-bottom:28px;
+  }
+
+  .auth-brand .eyebrow{
+    display:inline-block;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    color:var(--phosphor);
+    border:1px solid var(--phosphor-dim);
+    background:rgba(110,231,192,0.06);
+    padding:4px 10px;
+    border-radius:2px;
+    margin-bottom:14px;
+  }
+
+  .auth-brand h1{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:22px;
+    margin:0 0 8px;
+    color:var(--text);
+  }
+
+  .auth-brand .lede{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+    margin:0;
+  }
+
+  .auth-form{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .field-group{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    text-align:left;
+  }
+
+  .field-label{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  .auth-input{
+    width:100%;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:var(--text);
+    background:var(--panel-raised);
+    border:1px solid var(--line);
+    border-radius:5px;
+    padding:12px 13px;
+    outline:none;
+    transition:border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .auth-input::placeholder{
+    color:#5c6672;
+  }
+
+  .auth-input:focus{
+    border-color:var(--phosphor);
+    box-shadow:0 0 0 3px rgba(110,231,192,0.12);
+  }
+
+  .field-error{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--danger);
+  }
+
+  .scan-btn{
+    margin-top:6px;
+    width:100%;
+  }
+
+  .auth-footer{
+    text-align:center;
+    margin-top:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  .auth-link{
+    color:var(--phosphor);
+    text-decoration:none;
+    border-bottom:1px solid var(--phosphor-dim);
+  }
+
+  .auth-link:hover{
+    border-bottom-color:var(--phosphor);
+  }
+
+  .disclaimer{
+    margin-top:20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.05em;
+    color:var(--muted);
+    text-align:center;
+    max-width:380px;
+  }
+</style>
+
+{% endblock %}
