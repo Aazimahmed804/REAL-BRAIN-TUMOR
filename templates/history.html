@@ -1,25 +1,22 @@
-{% extends "index.html"%}
-{% block content %}
-   YOUR RECORDS · NEURO-ONCOLOGY
-            Scan History
+{% extends "index.html" %} {% block content %}
+YOUR RECORDS · NEURO-ONCOLOGY
+Scan History
+{% if predictions %} {% for p in predictions %}
+{{ p.file }}
 
+{{ p.result }}
 
-{%if predictions%}
-{%for p in predictions%}
+CONFIDENCE: {{ (p.confidence * 100) | round(2) }}%
 
-{{p.file}}
-
-
-{{p.uploaded_at.strftime('%d %b %Y, %I:%M %p')}}                      {{p.result}}                     {{p.confidence * 100 | round(2)}}
-{% endfor %}
-{% else %}
+{{ p.uploaded_at.strftime('%d %b %Y, %I:%M %p') }}
+{% endfor %} {% else %}
 No scans yet
+
 Your uploaded MRIs will show up here once you run a detection.
 
 {% endif %}
-
-                            Upload a New Scan
+Upload a New Scan
 FOR RESEARCH / SCREENING SUPPORT ONLY — NOT A SUBSTITUTE FOR CLINICAL DIAGNOSIS
 
-
+{% endblock %}
 {% endblock %}
